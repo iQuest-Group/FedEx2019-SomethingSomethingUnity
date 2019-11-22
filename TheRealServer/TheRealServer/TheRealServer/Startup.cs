@@ -25,6 +25,7 @@ namespace TheRealServer
         {
             services.AddRazorPages();
             services.AddSignalR();
+            services.AddScoped<ServerHub>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,9 @@ namespace TheRealServer
             {
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ServerHub>("/server");
+                endpoints.MapControllerRoute("/game", "{controller=Server}/{action=GetSpawnPoint}");
+                endpoints.MapControllerRoute("/game", "{controller=Server}/{action=PostMovement}");
+                endpoints.MapControllerRoute("/game", "{controller=Server}/{action=PostAttack}");
             });
         }
     }

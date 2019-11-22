@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FedEx 2019\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj": {}
+    "C:\\Users\\oprea\\Desktop\\FEdEx\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj": {}
   },
   "projects": {
-    "D:\\FedEx 2019\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj": {
+    "C:\\Users\\oprea\\Desktop\\FEdEx\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FedEx 2019\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj",
+        "projectUniqueName": "C:\\Users\\oprea\\Desktop\\FEdEx\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj",
         "projectName": "TheRealServer",
-        "projectPath": "D:\\FedEx 2019\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj",
-        "packagesPath": "C:\\Users\\alexandru.rotaru\\.nuget\\packages\\",
-        "outputPath": "D:\\FedEx 2019\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\obj\\",
+        "projectPath": "C:\\Users\\oprea\\Desktop\\FEdEx\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\TheRealServer.csproj",
+        "packagesPath": "C:\\Users\\oprea\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\oprea\\Desktop\\FEdEx\\FedEx2019-SomethingSomethingUnity\\TheRealServer\\TheRealServer\\TheRealServer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\alexandru.rotaru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\oprea\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -37,6 +40,30 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

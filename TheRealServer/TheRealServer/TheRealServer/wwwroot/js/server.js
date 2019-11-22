@@ -2,8 +2,9 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/server").build();
 
-connection.on("ReceiveMovement", function (posX, posY) {
-    document.getElementById("messagesList").value = posX + " "  + posY;
+connection.on("ReceiveMovement", function (playerPosition) {
+    console.log(playerPosition);
+    document.getElementById("messagesList").value = playerPosition.posX + " " + playerPosition.posY;
 });
 
 connection.start().then(function () {
@@ -13,8 +14,10 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    connection.invoke("SendMovement", 10, 1).catch(function (err) {
-        return console.error(err.toString());
+    var playerPosition = { "id": 1, "posX": 5, "posY": 20 };
+    console.log(playerPosition);
+    connection.invoke("SendMovement", playerPosition).catch(function (err) {
+        return console.error(err);
     });
     event.preventDefault();
 });
