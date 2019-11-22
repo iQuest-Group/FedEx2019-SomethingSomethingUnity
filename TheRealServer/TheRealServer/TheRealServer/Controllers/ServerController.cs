@@ -19,16 +19,17 @@ namespace TheRealServer.Controllers
         public ServerController(ServerHub hub)
         {
             playerSpawnPoint = new List<PlayerPosition>();
-            playerSpawnPoint.Add(new PlayerPosition(1, 5, 7));
-            playerSpawnPoint.Add(new PlayerPosition(1, 7, 9));
-            playerSpawnPoint.Add(new PlayerPosition(1, 1, 2));
+            playerSpawnPoint.Add(new PlayerPosition(1, "ALEX1", 5, 7));
+            playerSpawnPoint.Add(new PlayerPosition(1, "ALEX2", 7, 9));
+            playerSpawnPoint.Add(new PlayerPosition(1, "ALEX3", 1, 2));
             serverHub = hub;
         }
 
         [HttpGet]
         [Route("spawn")]
-        public IEnumerable<PlayerPosition> GetSpawnPoint()
+        public async Task<IEnumerable<PlayerPosition>> GetSpawnPoint()
         {
+            await serverHub.SendSpawnPoint(playerSpawnPoint);
             return playerSpawnPoint;
         }
 

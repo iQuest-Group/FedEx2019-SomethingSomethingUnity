@@ -21,7 +21,7 @@ namespace TheRealServer.Hubs
 
         public async Task SendSpawnPoint(List<PlayerPosition> playerPositions)
         {
-            await Clients.All.SendAsync("ReceiveSpawnPoint", playerPositions[0], playerPositions[1], playerPositions[2]);
+            await _hubContext.Clients.All.SendAsync("ReceiveSpawnPoint", playerPositions);
         }
     }
 }

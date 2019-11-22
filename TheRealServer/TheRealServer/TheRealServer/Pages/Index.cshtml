@@ -5,15 +5,9 @@
 }
 
 <div class="container">
-    <div class="row">&nbsp;</div>
-        <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
+            <input type="button" id="sendButton" value="Test Connection" />
         </div>
     </div>
 </div>
@@ -24,7 +18,7 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <textarea id="messagesList"></textarea>
+        <textarea readonly id="messagesList" style="width:100%; height: 500px"></textarea>
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

@@ -11,16 +11,19 @@ namespace TheRealServer.Models
         {
 
         }
-        public PlayerPosition(int Id, int posX, int posY)
+        public PlayerPosition(int Id, string Name, int PosX, int PosY)
         {
             this.Id = Id;
-            this.posX = posX;
-            this.posY = posY;
+            this.PosX = PosX;
+            this.PosY = PosY;
+            this.Name = Name;
         }
         public int Id { get; set; }
 
-        public int posX { get; set; }
+        public string Name { get; set; }
 
-        public int posY { get; set; }
+        public int PosX { get; set; }
+
+        public int PosY { get; set; }
     }
 }
