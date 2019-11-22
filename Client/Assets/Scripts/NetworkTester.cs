@@ -3,13 +3,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using UnityEngine;
 
+public class PlayerPosition
+{
+    public PlayerPosition()
+    {
+
+    }
+    public PlayerPosition(int Id, string Name, int PosX, int PosY)
+    {
+        this.Id = Id;
+        this.PosX = PosX;
+        this.PosY = PosY;
+        this.Name = Name;
+    }
+    public int Id { get; set; }
+
+    public string Name { get; set; }
+
+    public int PosX { get; set; }
+
+    public int PosY { get; set; }
+}
+
+
 public class NetworkTester : MonoBehaviour
 {
     [SerializeField] private Transform netPlayer;
 
     private HubConnection connection;
     private Vector3 otherPlayerPos;
-    private string hubUrl = "http://localhost:5000/messages";
+    private string hubUrl = "http://localhost:55386/server";
 
     private void Start()
     {
@@ -31,17 +54,24 @@ public class NetworkTester : MonoBehaviour
             await connection.StartAsync();
             Debug.Log("SignalR Started");
         };
-        connection.On<string>("ReceiveMessage", (message) =>
+        // connection.On<string>("ReceiveMessage", (message) =>
+        // {
+        //     Debug.Log($"ReceiveMessage: {message}");
+        // });
+        // connection.On<float, float>("Move", (movex, movey) =>
+        // {
+        //     Debug.Log("Doing move!!!!! ");
+        //     MovePlayer(new Vector3(movex, 0f, movey));
+        // });
+
+        connection.On<PlayerPosition>("ReceiveMovement", (playerPos) =>
         {
-            Debug.Log($"ReceiveMessage: {message}");
-        });
-        connection.On<float, float>("Move", (movex, movey) =>
-        {
-            Debug.Log("Doing move!!!!! ");
-            MovePlayer(new Vector3(movex, 0f, movey));
+            Debug.Log($"ReceiveMessage: {playerPos}");
         });
 
         Connect();
+
+
     }
 
     private async void Connect()
