@@ -9,6 +9,7 @@ public class MoveController : MonoBehaviour
     private Vector3 targetWorldPosition;
     private Vector2 OldGridPosition;
     private Vector2 GridPosition;
+    private Vector3 GridOffset = new Vector3(0.5f, 0f, 0.5f);
 
     void Start()
     {
@@ -16,7 +17,7 @@ public class MoveController : MonoBehaviour
             Mathf.Round(transform.position.x / GridSize),
             Mathf.Round(transform.position.z / GridSize)
         );
-        targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y);
+        targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y) + GridOffset;
     }
 
     void Update()
@@ -44,7 +45,7 @@ public class MoveController : MonoBehaviour
         {
             Debug.Log("Collision Detected!!! " + col.gameObject);
             GridPosition = OldGridPosition;
-            targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y);
+            targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y) + GridOffset;
         }
     }
 
@@ -72,6 +73,6 @@ public class MoveController : MonoBehaviour
     {
         OldGridPosition = GridPosition;
         GridPosition += gridMovement;
-        targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y);
+        targetWorldPosition = new Vector3(GridPosition.x, 0f, GridPosition.y) + GridOffset;
     }
 }
