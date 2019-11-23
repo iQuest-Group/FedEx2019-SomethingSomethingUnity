@@ -23,5 +23,10 @@ namespace TheRealServer.Hubs
         {
             await _hubContext.Clients.All.SendAsync("ReceiveSpawnPoint", playerPositions);
         }
+
+		public async Task PingHub()
+		{
+			await _hubContext.Clients.All.SendAsync("PingBack");
+		}
     }
 }

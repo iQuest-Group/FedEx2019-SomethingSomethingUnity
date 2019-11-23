@@ -32,7 +32,8 @@ public class NetworkTester : MonoBehaviour
 
     private HubConnection connection;
     private Vector3 otherPlayerPos;
-    private string hubUrl = "http://localhost:55386/server";
+    // private string hubUrl = "http://localhost:55386/server";
+    private string hubUrl = "https://fedex2019gameserver.azurewebsites.net/server";
 
     private void Start()
     {
@@ -54,24 +55,32 @@ public class NetworkTester : MonoBehaviour
             await connection.StartAsync();
             Debug.Log("SignalR Started");
         };
-        // connection.On<string>("ReceiveMessage", (message) =>
-        // {
-        //     Debug.Log($"ReceiveMessage: {message}");
-        // });
-        // connection.On<float, float>("Move", (movex, movey) =>
-        // {
-        //     Debug.Log("Doing move!!!!! ");
-        //     MovePlayer(new Vector3(movex, 0f, movey));
-        // });
+
+
 
         connection.On<PlayerPosition>("ReceiveMovement", (playerPos) =>
         {
             Debug.Log($"ReceiveMessage: {playerPos}");
         });
 
+        connection.On("PingBack", () =>
+        {
+            theTime.Stop();
+            Debug.Log($"Return back time is: {theTime.ElapsedMilliseconds} ms");
+        });
+
         Connect();
 
+    }
 
+    private System.Diagnostics.Stopwatch theTime;
+
+    public void TestConnectionLag()
+    {
+
+        theTime = new System.Diagnostics.Stopwatch();
+        theTime.Start();
+        connection.InvokeAsync("PingHub");
     }
 
     private async void Connect()
