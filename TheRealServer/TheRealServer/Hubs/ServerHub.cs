@@ -23,7 +23,7 @@ namespace TheRealServer.Hubs
 
         public async Task SendSpawnPoint(List<PlayerPosition> playerPositions)
         {
-            await _hubContext.Clients.All.SendAsync("ReceiveSpawnPoint", playerPositions);
+            await _hubContext.Clients.All.SendAsync("ReceiveSpawnPoints", playerPositions);
         }
 
         public async Task SendSingleSpawnPoint()
@@ -34,6 +34,11 @@ namespace TheRealServer.Hubs
         public async Task SendGameReset()
         {
             await _hubContext.Clients.All.SendAsync("ReceiveGameReset");
+        }
+
+        public async Task SendPlayerLeave(int id)
+        {
+            await _hubContext.Clients.All.SendAsync("ReceiveGameLeave", id);
         }
     }
 }

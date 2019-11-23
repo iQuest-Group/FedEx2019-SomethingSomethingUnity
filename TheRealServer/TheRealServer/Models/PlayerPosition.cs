@@ -25,5 +25,7 @@ namespace TheRealServer.Models
         public int PosX { get; set; }
 
         public int PosY { get; set; }
+
+        public int Order { get; set; }
     }
 }

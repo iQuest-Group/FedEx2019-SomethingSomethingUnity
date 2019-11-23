@@ -11,5 +11,9 @@ namespace TheRealServer.Services
         PlayerPosition GetPlayerSpawnPoint();
 
         void ResetGame();
+
+        void LeaveGame(int id);
+
+        List<PlayerPosition> GetPlayerPositions();
     }
 }

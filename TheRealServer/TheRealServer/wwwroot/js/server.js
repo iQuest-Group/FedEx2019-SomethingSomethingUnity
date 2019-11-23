@@ -2,10 +2,14 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/server").build();
 
-connection.on("ReceiveSpawnPoint", function (playerPositions) {
+connection.on("ReceiveSpawnPoints", function (playerPositions) {
     for (var i = 0; i < playerPositions.length; i++) {
         document.getElementById("messagesList").value += "Player " + playerPositions[i].name + " has spawned at: " + playerPositions[i].posX + ", " + playerPositions[i].posY + "\n";
     }
+});
+
+connection.on("ReceiveGameLeave", function (id) {
+    document.getElementById("messagesList").value += "Player with id: " + playerPosition.id + " has left the game " + "\n";
 });
 
 connection.on("ReceiveSingleSpawnPoint", function (playerPosition) {

@@ -28,7 +28,7 @@ namespace TheRealServer.Controllers
 		[Route("spawn")]
 		public async Task GetSpawnPoint()
 		{
-            await serverHub.SendSingleSpawnPoint();
+            await serverHub.SendSpawnPoint(spawnService.GetPlayerPositions());
 		}
 
         [HttpPost]
@@ -37,6 +37,14 @@ namespace TheRealServer.Controllers
         {
             spawnService.ResetGame();
             await serverHub.SendGameReset();
+        }
+
+        [HttpPost]
+        [Route("leave")]
+        public async Task LeaveGame([FromBody] int id)
+        {
+            spawnService.LeaveGame(id);
+            await serverHub.SendPlayerLeave(id);
         }
 
 		[HttpPost]

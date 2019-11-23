@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,10 +64,14 @@ public class HUDManager : MonoBehaviour
     {
         try
         {
-            HttpResponseMessage response = await client.GetAsync("http://localhost:55386/api/game/spawn");
+            //var data = new { id = GameManager.Instance.levelManager.GetCurrentPlayerId() };
+            var json = JsonConvert.SerializeObject(GameManager.Instance.levelManager.GetCurrentPlayerId());
+            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync("http://localhost:55386/api/game/leave", stringContent);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            UIScreen.SetActive(false);
+            UIScreen.SetActive(true);
+            leaveButton.gameObject.SetActive(false);
         }
         catch (HttpRequestException e)
         {

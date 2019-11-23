@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class PlayerPosition
     public int PosX { get; set; }
 
     public int PosY { get; set; }
+
+    public int Order { get; set; }
 }
 
 
@@ -31,7 +34,7 @@ public class NetworkTester : MonoBehaviour
 {
     [SerializeField] private Transform netPlayer;
 
-    private HubConnection connection;
+    public HubConnection connection;
     private Vector3 otherPlayerPos;
     private string hubUrl = "http://localhost:55386/server";
 
@@ -66,14 +69,19 @@ public class NetworkTester : MonoBehaviour
         //     MovePlayer(new Vector3(movex, 0f, movey));
         // });
 
-        connection.On<PlayerPosition>("ReceiveSingleSpawnPoint", (playerPos) =>
+        //connection.On<PlayerPosition>("ReceiveSingleSpawnPoint", (playerPos) =>
+        //{
+        //    UnityMainThreadDispatcher.Instance().Enqueue(SpawnPlayer(playerPos));
+        //});
+
+        connection.On<List<PlayerPosition>>("ReceiveSpawnPoints", (playerPos) =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(SpawnPlayer(playerPos));
+            UnityMainThreadDispatcher.Instance().Enqueue(SpawnPlayers(playerPos));
         });
 
         connection.On<PlayerPosition>("ReceiveMovement", (playerPos) =>
         {
-            Debug.Log($"ReceiveMessage: {playerPos}");
+            UnityMainThreadDispatcher.Instance().Enqueue(ReceiveMovement(playerPos));
         });
 
         connection.On("ReceiveGameReset", () =>
@@ -81,9 +89,36 @@ public class NetworkTester : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(ResetGame());
         });
 
+        connection.On<int>("ReceiveGameLeave", (id) =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(LeaveGame(id));
+        });
+
         Connect();
 
 
+    }
+
+    public IEnumerator ReceiveMovement(PlayerPosition playerPosition)
+    {
+        if(playerPosition.Id != GameManager.Instance.GetCurrentPlayerPosition().Id)
+        {
+            GameManager.Instance.levelManager.MovePlayer(playerPosition);
+        }
+        
+        yield return null;
+    }
+    
+    public void SendMovement(PlayerPosition playerPosition)
+    {
+        connection.SendAsync("SendMovement", playerPosition);
+    }
+
+    private IEnumerator LeaveGame(int id)
+    {
+        Debug.Log("Leave Game player with id: " + id);
+        GameManager.Instance.LeaveGame(id);
+        yield return null;
     }
 
     private IEnumerator ResetGame()
@@ -93,12 +128,10 @@ public class NetworkTester : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator SpawnPlayer(PlayerPosition playerPosition)
+    private IEnumerator SpawnPlayers(List<PlayerPosition> playerPositions)
     {
-        Debug.Log("Player spawned at" +  playerPosition.PosX + " " + playerPosition.PosY);
-        GameManager.Instance.levelManager.SpawnPlayer(playerPosition);
+        GameManager.Instance.levelManager.SpawnPlayer(playerPositions);
         yield return null;
-        //GameManager.Instance.levelManager.SpawnPlayer(playerPosition);
     }
 
     private async void Connect()
@@ -113,14 +146,6 @@ public class NetworkTester : MonoBehaviour
         {
             Debug.Log(ex.Message);
         }
-    }
-
-    private void MovePlayer(Vector3 deltaMove)
-    {
-
-        Debug.Log($"Moving {otherPlayerPos} by {deltaMove} ");
-        otherPlayerPos += deltaMove;
-        Debug.Log("moved");
     }
 
     private async void Send(string msg)
