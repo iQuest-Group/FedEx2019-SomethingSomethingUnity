@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using UnityEngine;
@@ -53,6 +54,7 @@ public class NetworkTester : MonoBehaviour
             Debug.Log("Connecting!");
             await connection.StartAsync();
             Debug.Log("SignalR Started");
+            
         };
         // connection.On<string>("ReceiveMessage", (message) =>
         // {
@@ -64,14 +66,39 @@ public class NetworkTester : MonoBehaviour
         //     MovePlayer(new Vector3(movex, 0f, movey));
         // });
 
+        connection.On<PlayerPosition>("ReceiveSingleSpawnPoint", (playerPos) =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(SpawnPlayer(playerPos));
+        });
+
         connection.On<PlayerPosition>("ReceiveMovement", (playerPos) =>
         {
             Debug.Log($"ReceiveMessage: {playerPos}");
         });
 
+        connection.On("ReceiveGameReset", () =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(ResetGame());
+        });
+
         Connect();
 
 
+    }
+
+    private IEnumerator ResetGame()
+    {
+        Debug.Log("Reset Game");
+        GameManager.Instance.ResetGame();
+        yield return null;
+    }
+
+    private IEnumerator SpawnPlayer(PlayerPosition playerPosition)
+    {
+        Debug.Log("Player spawned at" +  playerPosition.PosX + " " + playerPosition.PosY);
+        GameManager.Instance.levelManager.SpawnPlayer(playerPosition);
+        yield return null;
+        //GameManager.Instance.levelManager.SpawnPlayer(playerPosition);
     }
 
     private async void Connect()

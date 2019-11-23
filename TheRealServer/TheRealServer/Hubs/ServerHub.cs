@@ -30,5 +30,10 @@ namespace TheRealServer.Hubs
         {
             await _hubContext.Clients.All.SendAsync("ReceiveSingleSpawnPoint", spawnService.GetPlayerSpawnPoint());
         }
+
+        public async Task SendGameReset()
+        {
+            await _hubContext.Clients.All.SendAsync("ReceiveGameReset");
+        }
     }
 }

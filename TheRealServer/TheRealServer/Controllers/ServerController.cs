@@ -31,6 +31,14 @@ namespace TheRealServer.Controllers
             await serverHub.SendSingleSpawnPoint();
 		}
 
+        [HttpPost]
+        [Route("reset")]
+        public async Task ResetGame()
+        {
+            spawnService.ResetGame();
+            await serverHub.SendGameReset();
+        }
+
 		[HttpPost]
 		[Route("move")]
 		public async Task PostMovement([FromBody] PlayerPosition playerPosition)

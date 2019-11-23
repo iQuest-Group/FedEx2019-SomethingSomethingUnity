@@ -38,5 +38,10 @@ namespace TheRealServer.Services
 
             return spawn;
         }
+
+        public void ResetGame()
+        {
+            spawnPoints = spawnPoints.ToDictionary(w => w.Key, w => w.Key != null ? false : true);
+        }
     }
 }

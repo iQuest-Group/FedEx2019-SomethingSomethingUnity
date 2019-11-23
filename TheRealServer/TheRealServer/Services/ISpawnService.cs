@@ -9,5 +9,7 @@ namespace TheRealServer.Services
     public interface ISpawnService
     {
         PlayerPosition GetPlayerSpawnPoint();
+
+        void ResetGame();
     }
 }

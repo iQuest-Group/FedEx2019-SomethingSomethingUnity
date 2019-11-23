@@ -12,6 +12,10 @@ connection.on("ReceiveSingleSpawnPoint", function (playerPosition) {
         document.getElementById("messagesList").value += "Player " + playerPosition.name + " has spawned at: " + playerPosition.posX + ", " + playerPosition.posY + "\n";
 });
 
+connection.on("ReceiveGameReset", function () {
+    document.getElementById("messagesList").value += "Game was resetted" +  "\n";
+});
+
 connection.on("ReceiveMovement", function (playerPosition) {
     document.getElementById("messagesList").value += "Player " + playerPosition.name + " has moved at: " +  playerPosition.posX + ", " + playerPosition.posY + "\n";
 });
