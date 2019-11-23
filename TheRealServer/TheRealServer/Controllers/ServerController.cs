@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using TheRealServer.Hubs;
 using TheRealServer.Models;
+using TheRealServer.Services;
 
 namespace TheRealServer.Controllers
 {
@@ -14,23 +15,20 @@ namespace TheRealServer.Controllers
 	[ApiController]
 	public class ServerController : ControllerBase
     {
-		List<PlayerPosition> playerSpawnPoint;
 		ServerHub serverHub;
-		public ServerController(ServerHub hub)
+        ISpawnService spawnService;
+
+        public ServerController(ISpawnService spawnService, ServerHub hub)
 		{
-			playerSpawnPoint = new List<PlayerPosition>();
-			playerSpawnPoint.Add(new PlayerPosition(1, "ALEX1", 5, 7));
-			playerSpawnPoint.Add(new PlayerPosition(1, "ALEX2", 7, 9));
-			playerSpawnPoint.Add(new PlayerPosition(1, "ALEX3", 1, 2));
+            this.spawnService = spawnService;
 			serverHub = hub;
 		}
 
 		[HttpGet]
 		[Route("spawn")]
-		public async Task<IEnumerable<PlayerPosition>> GetSpawnPoint()
+		public async Task GetSpawnPoint()
 		{
-			await serverHub.SendSpawnPoint(playerSpawnPoint);
-			return playerSpawnPoint;
+            await serverHub.SendSingleSpawnPoint();
 		}
 
 		[HttpPost]

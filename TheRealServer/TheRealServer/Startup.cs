@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TheRealServer.Hubs;
+using TheRealServer.Services;
 
 namespace TheRealServer
 {
@@ -26,6 +27,7 @@ namespace TheRealServer
             services.AddRazorPages();
             services.AddSignalR();
             services.AddScoped<ServerHub>();
+            services.AddSingleton<ISpawnService, SpawnService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

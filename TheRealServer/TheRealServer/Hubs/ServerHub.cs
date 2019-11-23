@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheRealServer.Models;
+using TheRealServer.Services;
 
 namespace TheRealServer.Hubs
 {
     public class ServerHub : Hub
     {
         private readonly IHubContext<ServerHub> _hubContext;
-
-        public ServerHub(IHubContext<ServerHub> hubContext)
+        private readonly ISpawnService spawnService;
+        public ServerHub(ISpawnService spawnService, IHubContext<ServerHub> hubContext)
         {
             _hubContext = hubContext;
+            this.spawnService = spawnService;
         }
 
         public async Task SendMovement(PlayerPosition playerPosition)
@@ -22,6 +24,11 @@ namespace TheRealServer.Hubs
         public async Task SendSpawnPoint(List<PlayerPosition> playerPositions)
         {
             await _hubContext.Clients.All.SendAsync("ReceiveSpawnPoint", playerPositions);
+        }
+
+        public async Task SendSingleSpawnPoint()
+        {
+            await _hubContext.Clients.All.SendAsync("ReceiveSingleSpawnPoint", spawnService.GetPlayerSpawnPoint());
         }
     }
 }
