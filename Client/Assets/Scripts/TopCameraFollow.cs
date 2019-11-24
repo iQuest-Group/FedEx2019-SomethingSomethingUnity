@@ -20,7 +20,15 @@ public class TopCameraFollow : MonoBehaviour
     {
         if (Target == null)
         {
-            Target = GameObject.FindGameObjectWithTag("Player");
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            foreach(var player in players)
+            {
+                if (player.GetComponent<PlayerManager>().currentPlayer)
+                {
+                    Target = player;
+                }
+            }
+            
             return;
         }
         var targetPos = Target.transform.position + offset;

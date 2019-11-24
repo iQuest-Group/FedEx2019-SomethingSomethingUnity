@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
             playerManager.ID = playerPosition.Id;
             playerManager.playerPosition = playerPosition;
             playerManager.nextPosition = new PlayerPosition(playerPosition.Id, playerPosition.Name, playerPosition.PosX, playerPosition.PosY);
-            if (playerPosition.Order == maxOrder)
+            if (playerPosition.Order == maxOrder && !players.Exists(x => x.GetComponent<PlayerManager>().currentPlayer))
             {
                 playerManager.currentPlayer = true;
             }
