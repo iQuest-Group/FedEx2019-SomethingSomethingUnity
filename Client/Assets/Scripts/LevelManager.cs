@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,13 +10,13 @@ public class LevelManager : MonoBehaviour
     public List<GameObject> players = new List<GameObject>();
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SpawnPlayer(List<PlayerPosition> playerPositions)
@@ -25,7 +24,7 @@ public class LevelManager : MonoBehaviour
         int maxOrder = playerPositions.Max(x => x.Order);
         foreach (var playerPosition in playerPositions)
         {
-            if(players.Exists(x => x.GetComponent<PlayerManager>().ID == playerPosition.Id))
+            if (players.Exists(x => x.GetComponent<PlayerManager>().ID == playerPosition.Id))
             {
                 continue;
             }
@@ -45,7 +44,7 @@ public class LevelManager : MonoBehaviour
     public void DestroPlayer(int id)
     {
         var player = players.Find(p => p.GetComponent<PlayerManager>().ID == id);
-        if(player != null)
+        if (player != null)
         {
             players.Remove(player);
             GameObject.Destroy(player);
@@ -55,7 +54,7 @@ public class LevelManager : MonoBehaviour
     public int GetCurrentPlayerId()
     {
         int id = -1;
-        foreach(var player in players)
+        foreach (var player in players)
         {
             var pm = player.GetComponent<PlayerManager>();
             if (pm.currentPlayer)

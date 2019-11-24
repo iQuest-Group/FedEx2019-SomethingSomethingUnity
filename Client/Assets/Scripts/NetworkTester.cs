@@ -7,10 +7,7 @@ using UnityEngine;
 
 public class PlayerPosition
 {
-    public PlayerPosition()
-    {
-
-    }
+    public PlayerPosition() { }
     public PlayerPosition(int Id, string Name, int PosX, int PosY)
     {
         this.Id = Id;
@@ -19,13 +16,9 @@ public class PlayerPosition
         this.Name = Name;
     }
     public int Id { get; set; }
-
     public string Name { get; set; }
-
     public int PosX { get; set; }
-
     public int PosY { get; set; }
-
     public int Order { get; set; }
 }
 
@@ -36,7 +29,8 @@ public class NetworkTester : MonoBehaviour
 
     public HubConnection connection;
     private Vector3 otherPlayerPos;
-    private string hubUrl = "http://localhost:55386/server";
+    // private string hubUrl = "http://localhost:55386/server";
+    private string hubUrl = "https://fedex2019gameserver.azurewebsites.net/server";
 
     private void Start()
     {
@@ -52,12 +46,13 @@ public class NetworkTester : MonoBehaviour
             .Build();
         connection.Closed += async (error) =>
         {
-            Debug.Log("There was some error!");
-            await Task.Delay(UnityEngine.Random.Range(0, 5) * 1000);
+            Debug.Log($"There was some error! - {error} \nRetrying in 3 seconds...");
+            await Task.Delay(3000);
+
             Debug.Log("Connecting!");
             await connection.StartAsync();
+
             Debug.Log("SignalR Started");
-            
         };
         // connection.On<string>("ReceiveMessage", (message) =>
         // {
@@ -95,20 +90,18 @@ public class NetworkTester : MonoBehaviour
         });
 
         Connect();
-
-
     }
 
     public IEnumerator ReceiveMovement(PlayerPosition playerPosition)
     {
-        if(playerPosition.Id != GameManager.Instance.GetCurrentPlayerPosition().Id)
+        if (playerPosition.Id != GameManager.Instance.GetCurrentPlayerPosition().Id)
         {
             GameManager.Instance.levelManager.MovePlayer(playerPosition);
         }
-        
+
         yield return null;
     }
-    
+
     public void SendMovement(PlayerPosition playerPosition)
     {
         connection.SendAsync("SendMovement", playerPosition);
