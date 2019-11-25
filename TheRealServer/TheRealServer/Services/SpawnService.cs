@@ -8,8 +8,8 @@ namespace TheRealServer.Services
 {
     public class SpawnService : ISpawnService
     {
-        Dictionary<PlayerPosition, bool> spawnPoints;
-        int order = 0;
+        private Dictionary<PlayerPosition, bool> spawnPoints;
+        private int order = 0;
         public SpawnService()
         {
             spawnPoints = new Dictionary<PlayerPosition, bool>();
