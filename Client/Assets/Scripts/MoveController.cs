@@ -88,22 +88,22 @@ public class MoveController : MonoBehaviour
 
     public void CalculateMoveInGrid(PlayerPosition playerPosition)
     {
-        if(playerPosition.PosX - playerManager.playerPosition.PosX == -1)
+        if (playerPosition.PosX - playerManager.playerPosition.PosX == -1)
         {
             Move(Vector2.down);
             playerManager.playerPosition = playerPosition;
         }
-        else if(playerPosition.PosX - playerManager.playerPosition.PosX == 1)
+        else if (playerPosition.PosX - playerManager.playerPosition.PosX == 1)
         {
             Move(Vector2.up);
             playerManager.playerPosition = playerPosition;
         }
-        else if(playerPosition.PosY - playerManager.playerPosition.PosY == -1)
+        else if (playerPosition.PosY - playerManager.playerPosition.PosY == -1)
         {
             Move(Vector2.left);
             playerManager.playerPosition = playerPosition;
         }
-        else if(playerPosition.PosY - playerManager.playerPosition.PosY == 1)
+        else if (playerPosition.PosY - playerManager.playerPosition.PosY == 1)
         {
             Move(Vector2.right);
             playerManager.playerPosition = playerPosition;

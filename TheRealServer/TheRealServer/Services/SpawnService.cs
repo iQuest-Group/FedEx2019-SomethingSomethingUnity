@@ -13,12 +13,13 @@ namespace TheRealServer.Services
         public SpawnService()
         {
             spawnPoints = new Dictionary<PlayerPosition, bool>();
-            spawnPoints.Add(new PlayerPosition(1, "ALEX1", 2, 4), false);
-            spawnPoints.Add(new PlayerPosition(2, "ALEX2", 3, 1), false);
-            spawnPoints.Add(new PlayerPosition(3, "ALEX3", 1, 2), false);
-        }
+            spawnPoints.Add(new PlayerPosition(1, "ALEX1", 46, -38), false);
+            spawnPoints.Add(new PlayerPosition(2, "ALEX2", -40, 32), false);
+			spawnPoints.Add(new PlayerPosition(3, "ALEX3", 44, 33), false);
+			//spawnPoints.Add(new PlayerPosition(3, "ALEX4", -41, -43), false);
+		}
 
-        public PlayerPosition GetPlayerSpawnPoint()
+		public PlayerPosition GetPlayerSpawnPoint()
         {
             if(spawnPoints.Values.All(value => value == true))
             {

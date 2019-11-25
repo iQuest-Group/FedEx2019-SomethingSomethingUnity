@@ -4,24 +4,24 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/server").build();
 
 connection.on("ReceiveSpawnPoints", function (playerPositions) {
     for (var i = 0; i < playerPositions.length; i++) {
-        document.getElementById("messagesList").value += "Player " + playerPositions[i].name + " has spawned at: " + playerPositions[i].posX + ", " + playerPositions[i].posY + "\n";
+        LogMessage("Player " + playerPositions[i].name + " has spawned at: " + playerPositions[i].posX + ", " + playerPositions[i].posY);
     }
 });
 
 connection.on("ReceiveGameLeave", function (id) {
-    document.getElementById("messagesList").value += "Player with id: " + playerPosition.id + " has left the game " + "\n";
+    LogMessage("Player with id: " + playerPosition.id + " has left the game ");
 });
 
 connection.on("ReceiveSingleSpawnPoint", function (playerPosition) {
-        document.getElementById("messagesList").value += "Player " + playerPosition.name + " has spawned at: " + playerPosition.posX + ", " + playerPosition.posY + "\n";
+    LogMessage("Player " + playerPosition.name + " has spawned at: " + playerPosition.posX + ", " + playerPosition.posY);
 });
 
 connection.on("ReceiveGameReset", function () {
-    document.getElementById("messagesList").value += "Game was resetted" +  "\n";
+    LogMessage("Game was reset");
 });
 
 connection.on("ReceiveMovement", function (playerPosition) {
-    document.getElementById("messagesList").value += "Player " + playerPosition.name + " has moved at: " +  playerPosition.posX + ", " + playerPosition.posY + "\n";
+    LogMessage("Player " + playerPosition.name + " has moved at: " +  playerPosition.posX + ", " + playerPosition.posY);
 });
 
 connection.start().then(function () {
@@ -38,3 +38,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+
+function LogMessage(msg) {
+    var messageList = document.getElementById("messagesList");
+    messageList.value = msg + '\n' + messageList.value;
+}
